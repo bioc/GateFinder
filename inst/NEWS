@@ -1,0 +1,8 @@
+0.99.1: This is the submitted version of the package.
+0.99.2: Minor warning (re documentation syntax) fixed.
+0.99.3: Package under review. First batch of comments addressed.
+0.99.4: Improved error handling to disable outlier removal when the distribution is artificially modified to something linear.
+0.99.5: Minor fix in the documentation of the ProGater function.
+0.99.6: Made the main plot function a bit pretties (by plotting the target population over the others).
+0.99.7: Small bug fix. Returns the correct cell membership vectors for each step (last step was omitted). Improved plot functions to handle a dark background. We now do a single-modality test. New dependencies added. This version was submitted to BioC for review.
+0.99.8: Reviewer comments are addressed. It now imports flowCore and suggests flowUtils. 

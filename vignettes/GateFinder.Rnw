@@ -1,0 +1,148 @@
+%\VignetteIndexEntry{GateFinder}
+
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{cite, hyperref}
+
+
+\title{GateFinder: Projection-based Gating Strategy Optimization for
+  Polychromatic and Mass Flow Cytometry Data}
+\author{Nima Aghaeepour and Erin F. Simonds}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+\setkeys{Gin}{width=1.0\textwidth, height=1.1\textwidth}
+
+\maketitle
+\begin{center}
+{\tt naghaeep@gmail.com and erin.simonds@gmail.com}
+\end{center}
+
+\textnormal{\normalfont}
+
+\tableofcontents
+
+\section{Licensing}
+
+Under the Artistic License, you are free to use and redistribute this software. 
+
+
+
+\section{Introduction}
+Exploratory analysis using polychromatic
+\cite{chattopadhyay2006quantum} and mass \cite{bendall2011single} flow cytometry together with modern
+computational tools (\emph{e.g.,}
+\cite{aghaeepour2012early,aghaeepour2012rchyoptimyx,
+  qiu2011extracting, amir2013visne, aghaeepour2013critical}) often result in identification of complex cell
+populations that cannot be easily described using a limited number of
+markers. GateFinder attempts to identify a series of gates (\emph{i.e.}
+polygon filters on 2-dimensional scatter plots) that can discriminate
+between a target cell population and other cells. 
+
+Briefly, the analysis consists of three steps:
+\begin{enumerate}
+\item Project the data points into all possible pairs of
+  dimensions. Use robust statistics to exclude outliers
+  \cite{filzmoser2008outlier}. Calculate a convex hull (a convex
+  polygon around the remaining data points) \cite{eddy1977new}.
+  \item Calculate F-measure values for all available gates. Select the
+    best one. 
+    \item Depending on software configurations (see the $update.gates$
+      parameter) either go to 1 or 2 unless the maximum number of iterations has
+    been reached.
+\end{enumerate}
+
+
+
+\section{Basic Functionality}
+This example uses part of a publicly available bone marrow mass cytometry dataset
+\cite{bendall2011single}. In this specific subset of the dataset cells
+were stimulated by lipopolysaccharide (LPS) and the response was
+measured phosphorylation of p38 mitogen-activated protein kinase
+(p38 MAPK). A random subset of $1000$ cells were selected for this
+analysis to comply with BioConductor's size and run time
+requirements. The optimal number of cells for GateFinder depends on the
+number of parameters in the search space, the size of the target population,
+and the desired purity. GateFinder expects transformed data. This dataset was
+previously transformed with the \emph{arcsinhTransform()} function from the flowCore package, using
+parameters $a=0$, $b=0.2$, $c=0$. Original analysis of the data revealed that the majority
+of the p38 MAPK response is in the CD11b+ monocytes. Here, we will use GateFinder
+to derive a specific gating strategy for the LPS-responsive cell population.
+
+First, we select the target cell population by gating the phospho-p38 marker
+(dimension number $34$) and selecting all cells with intensity greater than 3.5:
+<<c1, echo=TRUE, fig=TRUE>>=
+library(GateFinder)
+library(flowCore)
+
+data(LPSData)
+targetpop <- (exprs(rawdata)[,34] > 3.5)
+plot(exprs(rawdata)[ , c(2,34)], pch='.', col=targetpop+1, 
+     xlab='Cell Length', ylab='p-p38')
+abline(h=3.5, col=3, lwd=2, lty=2)
+@ 
+
+Next, we select the markers that should be considered for the gating
+strategy and run the core \emph{GateFinder()} function:
+<<c12, echo=TRUE, fig=FALSE>>=
+x=exprs(rawdata)[ , prop.markers]
+colnames(x)=marker.names[prop.markers]
+results=GateFinder(x, targetpop)
+@
+
+Now we can create a scatter plot of each gating step. GateFinder's
+\emph{plot.GateFinder()} function accepts 4 arguments specifying the raw data, the
+output of the \emph{GateFinder()} function, the layout of figure panels to
+assemble in the plot, and a logical mask specifying the target cells.
+The original target cells are highlighted in red. Gray cells were excluded
+in one of the previous gating steps. Black cells are cells that are not
+in the original target population. This analysis suggests that the
+target population is CD33$^+$CD38$^+$CD11b$^+$CD123$^-$.
+<<c13, echo=TRUE, fig=TRUE>>=
+plot (x, results, c(2,3), targetpop)
+@
+
+We can also visualize the F-measure, precision (i.e., ``purity''), 
+and recall (i.e., ``yield'') of each
+step. As expected, making the gating more strict (by including more
+gating steps) increases the precision and decreases the recall of the
+gating strategy.
+<<c14, echo=TRUE, fig=TRUE>>=
+plot(results)
+@ 
+
+
+\section{Advanced Parameters}
+GateFinder's functionality can be controled using two parameters: the
+\emph{outlier.percentile} value controls the robustness of the convex
+hulls (polygon gates) to outliers and the \emph{beta} value controls
+the relative impact of precision and recall on the F-measure calculations.
+
+
+Higher values for the \emph{outlier.percentile} parameter make the
+gates less strict (and therefore will increase precision and decrease recall):
+<<c2, echo=TRUE, fig=TRUE>>=
+results=GateFinder(x, targetpop, outlier.percentile=0.5)     
+plot (x, results, c(2,3), targetpop)
+plot(results)
+@ 
+
+Similarly, a \emph{beta} value smaller than $1$ increases in the impact
+of precision on the F-measure calculations. In the following
+calculations a value of 0.5 makes precision twice as important as
+recall. Therefore the algorithm modifies the gating strategy to
+increase the precision of the gating strategy. This is achieved by
+combining CD11b and CD33 in the very first gate at the cost of a
+decreased recall.
+<<c21, echo=TRUE, fig=TRUE>>=
+results=GateFinder(x, targetpop, beta=0.5)     
+plot (x, results, c(2,3), targetpop)
+plot(results)
+@ 
+
+\bibliographystyle{plain}
+\bibliography{GateFinder}
+
+
+\end{document}
