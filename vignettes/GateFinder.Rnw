@@ -6,8 +6,7 @@
 \usepackage{cite, hyperref}
 
 
-\title{GateFinder: Projection-based Gating Strategy Optimization for
-  Polychromatic and Mass Flow Cytometry Data}
+\title{Projection-based Gating Strategy Optimization for Flow and Mass Cytometry}
 \author{Nima Aghaeepour and Erin F. Simonds}
 
 \begin{document}

@@ -6,3 +6,4 @@
 0.99.6: Made the main plot function a bit pretties (by plotting the target population over the others).
 0.99.7: Small bug fix. Returns the correct cell membership vectors for each step (last step was omitted). Improved plot functions to handle a dark background. We now do a single-modality test. New dependencies added. This version was submitted to BioC for review.
 0.99.8: Reviewer comments are addressed. It now imports flowCore and suggests flowUtils. 
+0.99.9: Cytommetry references & supported architectures updated
