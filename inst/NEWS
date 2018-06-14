@@ -16,3 +16,5 @@
 + Reviewer comments are addressed. It now imports flowCore and suggests flowUtils. 
 0.99.9:
 + Cytommetry references & supported architectures updated
+1.0.1:
++ Bug fix re. missing marker names when analyzing multiple target populations simultaneously.
