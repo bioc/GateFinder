@@ -97,7 +97,7 @@ assemble in the plot, and a logical mask specifying the target cells.
 The original target cells are highlighted in red. Gray cells were excluded
 in one of the previous gating steps. Black cells are cells that are not
 in the original target population. This analysis suggests that the
-target population is CD33$^+$CD38$^+$CD11b$^+$CD123$^-$.
+target population is CD33$^+$CD34$^+$CD11b$^+$CD3$^+$.
 <<c13, echo=TRUE, fig=TRUE>>=
 plot (x, results, c(2,3), targetpop)
 @
