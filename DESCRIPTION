@@ -1,7 +1,7 @@
 Package: GateFinder
 Type: Package
 Title: Projection-based Gating Strategy Optimization for Flow and Mass Cytometry 
-Version: 1.3.0
+Version: 1.3.1
 Date: 2018-03-28
 Author: Nima Aghaeepour <naghaeep@gmail.com>, Erin F. Simonds <erin.simonds@gmail.com>
 Maintainer: Nima Aghaeepour <naghaeep@gmail.com>
@@ -10,6 +10,6 @@ Imports: splancs, mvoutlier, methods, stats, diptest, flowCore, flowFP,
 Suggests: RUnit, flowUtils, BiocGenerics
 Description: Given a vector of cluster memberships for a cell population, identifies a sequence of gates (polygon filters on 2D scatter plots) for isolation of that cell type.
 License: Artistic-2.0
-biocViews: FlowCytometry, CellBiology, Clustering
+biocViews: ImmunoOncology, FlowCytometry, CellBiology, Clustering
 NeedsCompilation: no
 Packaged: 2018-03-28 18:26:52 UTC; naghaeep
