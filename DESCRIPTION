@@ -7,7 +7,7 @@ Author: Nima Aghaeepour <naghaeep@gmail.com>, Erin F. Simonds <erin.simonds@gmai
 Maintainer: Nima Aghaeepour <naghaeep@gmail.com>
 Requires: alphahull, maptools
 Imports: splancs, mvoutlier, methods, stats, diptest, flowCore, flowFP,
-Suggests: RUnit, flowUtils, BiocGenerics
+Suggests: RUnit, BiocGenerics
 Description: Given a vector of cluster memberships for a cell population, identifies a sequence of gates (polygon filters on 2D scatter plots) for isolation of that cell type.
 License: Artistic-2.0
 biocViews: FlowCytometry, CellBiology, Clustering
