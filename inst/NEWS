@@ -20,3 +20,5 @@
 + Bug fix re. missing marker names when analyzing multiple target populations simultaneously.
 1.3.0:
 + Bug fix re.removing unnecessary suggestion of flowUtils.
+1.3.2:
++ fixed conditional statement issue
