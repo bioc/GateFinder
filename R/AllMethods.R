@@ -102,7 +102,7 @@ GateFinder <- function(x, targetpop, update.gates=FALSE, max.iter=2, beta=1, out
     if (i==1 | update.gates)
       gates=.getGates(x[currentpop,],targetpop[currentpop], skipdims=c(dimx,dimy),outlier.percentile=outlier.percentile, beta, predimx=predimx[i], predimy=predimy[i], convex=convex, alpha=alpha)
     temp=.getScores(x, targetpop, gates=gates, skipdims=c(dimx,dimy), currentpop=currentpop, beta, randomize=randomize, predimx=predimx[i], predimy=predimy[i])
-    if (is.na(temp)){
+    if (all(is.na(temp))){ #changed to any
       if (i==1)
         return(NULL)
       break
@@ -311,8 +311,7 @@ GateFinder <- function(x, targetpop, update.gates=FALSE, max.iter=2, beta=1, out
 }
 
 ##Given a cell population (targetpop) and a data matrix (x) and a set of polygon gates (gates), calculate F-measures (using the given beta) of all the gates for the cells identified from the previous step (marked in currentpop).
-.getScores <-
-  function(x, targetpop, gates, skipdims=NA, currentpop=rep(TRUE,length(targetpop)), beta, randomize, predimx=NULL, predimy=NULL){
+.getScores <- function(x, targetpop, gates, skipdims=NA, currentpop=rep(TRUE,length(targetpop)), beta, randomize, predimx=NULL, predimy=NULL){
     if (length(which(!is.na(unlist(gates))))==0)
       return(NA)
     n=dim(x)[2]
@@ -331,7 +330,7 @@ GateFinder <- function(x, targetpop, update.gates=FALSE, max.iter=2, beta=1, out
           next
         if (j %in% skipdims)
           next
-        if (is.na(gates[[i]][[j]]) | (length(gates[[i]][[j]])==0)){
+        if ( all(is.na(gates[[i]][[j]])) | (length(gates[[i]][[j]])==0) ){ #changed
           fmeasure[i,j]=0
           precision[i,j]=0
           recall[i,j]=0

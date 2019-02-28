@@ -7,7 +7,7 @@ plot.GateFinder
 Creates a scatter plot for each of the gating steps.
 }
 \usage{
-plot.GateFinder(x, y, ncolrow=c(1,max(targetpop)), targetpop=NULL, beta=NULL,  cexs=NULL, cols=NULL, subsample=length(targetpop), max.iter=length(y@gates), pot=TRUE, xlim=NULL, ylim=NULL, asinh.axis=FALSE,...)
+\method{plot}{GateFinder}(x, y, ncolrow=c(1,max(targetpop)), targetpop=NULL, beta=NULL,  cexs=NULL, cols=NULL, subsample=length(targetpop), max.iter=length(y@gates), pot=TRUE, xlim=NULL, ylim=NULL, asinh.axis=FALSE, ...)
 }
 
 \arguments{
@@ -68,8 +68,6 @@ Nima Aghaeepour <naghaeep@gmail.com> and Erin F. Simonds <erin.simonds@gmail.com
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \examples{
-
-
 library(flowCore)
 
 data(LPSData) 
@@ -84,7 +82,7 @@ colnames(x)=marker.names[prop.markers]
 ans=GateFinder(x, targetpop)
 
 ##Make the plots.
-plot (x, ans, c(2,3), targetpop)
+plot(x, ans, c(2,3), targetpop)
 plot(ans)
 
 
@@ -100,5 +98,4 @@ split(x, ans@flowEnv$Filter2)
 ##To write the gates into a GatingML file:
 ##library(flowUtils)
 ##write.gatingML(ans@flowEnv, 'GatingML.xml')
-
 }
