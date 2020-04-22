@@ -46,7 +46,7 @@ GateFinder <- function(x, targetpop, update.gates=FALSE, max.iter=2, beta=1, out
   if (!is.null(predimx))
     update.gates=TRUE
   
-  if (class(x)=='flowFrame')
+  if ('flowFrame' %in% class(x))
     x=exprs(x)
   
   if (unimodalitytest){
