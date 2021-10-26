@@ -1,7 +1,7 @@
 Package: GateFinder
 Type: Package
 Title: Projection-based Gating Strategy Optimization for Flow and Mass Cytometry 
-Version: 1.13.0
+Version: 1.14.0
 Date: 2018-03-28
 Author: Nima Aghaeepour <naghaeep@gmail.com>, Erin F. Simonds <erin.simonds@gmail.com>
 Maintainer: Nima Aghaeepour <naghaeep@gmail.com>
